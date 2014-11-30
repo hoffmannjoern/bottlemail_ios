@@ -16,4 +16,6 @@
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
 
 
+-(instancetype)initBottleIndex:(NSUInteger)bottleIndex;
+
 @end

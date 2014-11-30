@@ -116,10 +116,10 @@
   JSQMessage *message = [self.modelData.messages objectAtIndex:indexPath.item];
   
   if ([message.senderId isEqualToString:self.senderId]) {
-    return self.modelData.outgoingBubbleImageData;
+    return (id) self.modelData.outgoingBubbleImageData;
   }
   
-  return self.modelData.incomingBubbleImageData;
+  return (id) self.modelData.incomingBubbleImageData;
 }
 
 - (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView
@@ -326,16 +326,16 @@
 }
 
 
-
-
 // ------------------------------------------------------------------------------------------------------------------ //
 #pragma mark - UIViewController overrides
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  
-  self.modelData = [[ModelData alloc] init];
+
   self.title = @"Messages";
+  if (!_modelData) {
+    _modelData = [[ModelData alloc] init];
+  }
   
   self.senderDisplayName = [NSUserDefaults userName];
   self.senderId = [NSUserDefaults userId];

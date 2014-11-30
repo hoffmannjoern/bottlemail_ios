@@ -99,32 +99,23 @@ static NSString *const kDate = @"date";
     jsonArray = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
   }
   
-  if (jsonArray) {
+  if (jsonArray)
     messages = [self messagesFormJsonArray:jsonArray];
-    NSLog(@"messages %@", messages);
-  }
   
   // If no data, create array
   if (!messages)
-  {
     messages = [[NSMutableArray alloc] init];
-  }
   
   return messages;
 }
 
 -(void)saveMessages
 {
-  NSLog(@"path %@", _bottlePath);
-  NSLog(@"messages %@", _messages);
-  
   NSArray *array = [self jsonArrayFromMessages];
-  NSLog(@"array %@", array);
-  
   NSData *jsonData = [self jsonDataFromObject:array];
                       
   BOOL written = [jsonData writeToFile:_bottlePath atomically:true];
-  NSLog(@"Written %d", written);
+  NSLog(@"Messages %@ saved!", written ? @"successfully" : @"not");
 }
 
 // -----------------------------------------------------------------------------------------------------------------  //
@@ -160,7 +151,6 @@ static NSString *const kDate = @"date";
 {
   [self saveMessages];
 }
-
 
 +(void)load
 {

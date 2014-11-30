@@ -7,8 +7,22 @@
 //
 
 #import "RackTableViewController.h"
+#import "MessagesViewController.h"
+#import "ModelData.h"
+
+static NSString *const segueToMessages = @"SegueToMessages";
+static NSString *const segueToSettings = @"SegueToSettings";
+
+typedef NS_ENUM(NSUInteger, Section) {
+  SectionBottles = 0,
+  SectionSettings,
+  SectionCount
+};
 
 @interface RackTableViewController ()
+{
+  NSUInteger _selectedRow;
+}
 
 @end
 
@@ -20,16 +34,19 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
+    return SectionCount;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  if (section == 0)
+  if (section == SectionBottles)
     return 2;
   
-  else
+  else if (section == SectionSettings)
     return 1;
+  
+  else
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -41,13 +58,14 @@
   // Set content
   NSString *text = @"";
   NSString *detail = @"";
-  if (indexPath.section == 0)
+  NSUInteger section = indexPath.section;
+  if (section == SectionBottles)
   {
     text = [NSString stringWithFormat:@"Bottle %lu", indexPath.row];
     detail = @(-22).stringValue;
   }
   
-  else if (indexPath.section == 1)
+  else if (indexPath.section == SectionSettings)
   {
     text = @"Settings";
   }
@@ -65,13 +83,14 @@
 {
   const NSUInteger section = indexPath.section;
   const NSUInteger row = indexPath.row;
+  _selectedRow = row;
   
   // Settings
-  if (section == 1 && row == 0)
-    [self performSegueWithIdentifier:@"SegueToSettings" sender:self];
+  if (section == SectionSettings && row == 0)
+    [self performSegueWithIdentifier:segueToSettings sender:self];
   
   else
-    [self performSegueWithIdentifier:@"SegueToMessages" sender:self];
+    [self performSegueWithIdentifier:segueToMessages sender:self];
 }
 
 /*
@@ -108,15 +127,22 @@
 }
 */
 
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+  if ([segue.identifier isEqualToString:segueToMessages])
+  {
+    MessagesViewController *mvc = segue.destinationViewController;
+    if (![mvc isKindOfClass:[MessagesViewController class]])
+      return;
+    
+    mvc.modelData = [[ModelData alloc] initBottleIndex:_selectedRow];
+  }
 }
-*/
 
 
 #pragma mark - View controller overrides
