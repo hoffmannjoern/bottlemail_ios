@@ -9,11 +9,13 @@
 /* Begin PBXBuildFile section */
 		8093BF291A2B339A0058BB9B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8093BF281A2B339A0058BB9B /* main.m */; };
 		8093BF2C1A2B339A0058BB9B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8093BF2B1A2B339A0058BB9B /* AppDelegate.m */; };
-		8093BF2F1A2B339A0058BB9B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8093BF2E1A2B339A0058BB9B /* ViewController.m */; };
 		8093BF321A2B339A0058BB9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8093BF301A2B339A0058BB9B /* Main.storyboard */; };
 		8093BF341A2B339A0058BB9B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8093BF331A2B339A0058BB9B /* Images.xcassets */; };
 		8093BF371A2B339A0058BB9B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8093BF351A2B339A0058BB9B /* LaunchScreen.xib */; };
 		8093BF431A2B339A0058BB9B /* Bottl_e_mailTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8093BF421A2B339A0058BB9B /* Bottl_e_mailTests.m */; };
+		8093BF4E1A2B36820058BB9B /* MainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8093BF4D1A2B36820058BB9B /* MainTableViewController.m */; };
+		8093BF511A2B455D0058BB9B /* NSUserDefaults+Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8093BF501A2B455D0058BB9B /* NSUserDefaults+Settings.m */; };
+		8093BF541A2B477B0058BB9B /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8093BF531A2B477B0058BB9B /* SettingsTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,14 +34,18 @@
 		8093BF281A2B339A0058BB9B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8093BF2A1A2B339A0058BB9B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8093BF2B1A2B339A0058BB9B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		8093BF2D1A2B339A0058BB9B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		8093BF2E1A2B339A0058BB9B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		8093BF311A2B339A0058BB9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8093BF331A2B339A0058BB9B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8093BF361A2B339A0058BB9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		8093BF3C1A2B339A0058BB9B /* Bottl(e)mailTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bottl(e)mailTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8093BF411A2B339A0058BB9B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8093BF421A2B339A0058BB9B /* Bottl_e_mailTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Bottl_e_mailTests.m; sourceTree = "<group>"; };
+		8093BF4C1A2B36820058BB9B /* MainTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewController.h; sourceTree = "<group>"; };
+		8093BF4D1A2B36820058BB9B /* MainTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewController.m; sourceTree = "<group>"; };
+		8093BF4F1A2B455D0058BB9B /* NSUserDefaults+Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSUserDefaults+Settings.h"; sourceTree = "<group>"; };
+		8093BF501A2B455D0058BB9B /* NSUserDefaults+Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSUserDefaults+Settings.m"; sourceTree = "<group>"; };
+		8093BF521A2B477B0058BB9B /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
+		8093BF531A2B477B0058BB9B /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,12 +89,16 @@
 			children = (
 				8093BF2A1A2B339A0058BB9B /* AppDelegate.h */,
 				8093BF2B1A2B339A0058BB9B /* AppDelegate.m */,
-				8093BF2D1A2B339A0058BB9B /* ViewController.h */,
-				8093BF2E1A2B339A0058BB9B /* ViewController.m */,
 				8093BF301A2B339A0058BB9B /* Main.storyboard */,
 				8093BF331A2B339A0058BB9B /* Images.xcassets */,
 				8093BF351A2B339A0058BB9B /* LaunchScreen.xib */,
 				8093BF261A2B339A0058BB9B /* Supporting Files */,
+				8093BF4C1A2B36820058BB9B /* MainTableViewController.h */,
+				8093BF4D1A2B36820058BB9B /* MainTableViewController.m */,
+				8093BF521A2B477B0058BB9B /* SettingsTableViewController.h */,
+				8093BF531A2B477B0058BB9B /* SettingsTableViewController.m */,
+				8093BF4F1A2B455D0058BB9B /* NSUserDefaults+Settings.h */,
+				8093BF501A2B455D0058BB9B /* NSUserDefaults+Settings.m */,
 			);
 			path = "Bottl(e)mail";
 			sourceTree = "<group>";
@@ -219,9 +229,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8093BF2F1A2B339A0058BB9B /* ViewController.m in Sources */,
+				8093BF511A2B455D0058BB9B /* NSUserDefaults+Settings.m in Sources */,
 				8093BF2C1A2B339A0058BB9B /* AppDelegate.m in Sources */,
+				8093BF541A2B477B0058BB9B /* SettingsTableViewController.m in Sources */,
 				8093BF291A2B339A0058BB9B /* main.m in Sources */,
+				8093BF4E1A2B36820058BB9B /* MainTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +360,7 @@
 				INFOPLIST_FILE = "Bottl(e)mail/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -358,6 +371,7 @@
 				INFOPLIST_FILE = "Bottl(e)mail/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
