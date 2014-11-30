@@ -1,0 +1,16 @@
+PODS:
+  - JSQMessagesViewController (6.1.0):
+    - JSQSystemSoundPlayer (~> 2.0.0)
+  - JSQSystemSoundPlayer (2.0.0)
+  - LGBluetooth (1.1.4)
+
+DEPENDENCIES:
+  - JSQMessagesViewController
+  - LGBluetooth (~> 1.1.2)
+
+SPEC CHECKSUMS:
+  JSQMessagesViewController: 8998c086bf6db5d6190376041903d5be2961f03f
+  JSQSystemSoundPlayer: c98443b1cbb3b45db09d0d3d6c2355cf78294981
+  LGBluetooth: 00f37b8c29cccc1dd44d5f726b2ec4a6e91c74ec
+
+COCOAPODS: 0.35.0
