@@ -17,8 +17,6 @@
 #import "ModelData.h"
 #import "NSUserDefaults+Settings.h"
 
-
-
 @interface MessagesViewController () <UIActionSheetDelegate>
 @end
 
@@ -99,12 +97,14 @@
 
 #pragma mark - JSQMessages CollectionView DataSource
 
-- (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
+- (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView
+       messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
   return [self.modelData.messages objectAtIndex:indexPath.item];
 }
 
-- (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
+- (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView
+             messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
   /**
    *  You may return nil here if you do not want bubbles.
@@ -122,7 +122,8 @@
   return self.modelData.incomingBubbleImageData;
 }
 
-- (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
+- (id<JSQMessageAvatarImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView
+                    avatarImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
 {
   /**
    *  Return `nil` here if you do not want avatars.
@@ -147,22 +148,22 @@
    *  Override the defaults in `viewDidLoad`
    */
   /*
-  JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
-  
-  if ([message.senderId isEqualToString:self.senderId]) {
-    if (![NSUserDefaults outgoingAvatarSetting]) {
-      return nil;
-    }
-  }
-  else {
-    if (![NSUserDefaults incomingAvatarSetting]) {
-      return nil;
-    }
-  }
-  
-  
-  return [self.demoData.avatars objectForKey:message.senderId];
-  */
+   JSQMessage *message = [self.demoData.messages objectAtIndex:indexPath.item];
+   
+   if ([message.senderId isEqualToString:self.senderId]) {
+   if (![NSUserDefaults outgoingAvatarSetting]) {
+   return nil;
+   }
+   }
+   else {
+   if (![NSUserDefaults incomingAvatarSetting]) {
+   return nil;
+   }
+   }
+   
+   
+   return [self.demoData.avatars objectForKey:message.senderId];
+   */
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
@@ -171,14 +172,10 @@
    *  This logic should be consistent with what you return from `heightForCellTopLabelAtIndexPath:`
    *  The other label text delegate methods should follow a similar pattern.
    *
-   *  Show a timestamp for every 3rd message
+   *  Show a timestamp for every message
    */
-  if (indexPath.item % 3 == 0) {
-    JSQMessage *message = [self.modelData.messages objectAtIndex:indexPath.item];
-    return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
-  }
-  
-  return nil;
+  JSQMessage *message = [self.modelData.messages objectAtIndex:indexPath.item];
+  return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath
@@ -259,13 +256,85 @@
 }
 
 // ------------------------------------------------------------------------------------------------------------------ //
+#pragma mark - JSQMessages collection view flow layout delegate
+#pragma mark - Adjusting cell label heights
+- (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
+                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
+{
+  /**
+   *  Each label in a cell has a `height` delegate method that corresponds to its text dataSource method
+   */
+  
+  /**
+   *  This logic should be consistent with what you return from `attributedTextForCellTopLabelAtIndexPath:`
+   *  The other label height delegate methods should follow similarly
+   *
+   *  Show a timestamp for every message
+   */
+  return kJSQMessagesCollectionViewCellLabelHeightDefault;
+}
+
+- (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
+                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath
+{
+  /**
+   *  iOS7-style sender name labels
+   */
+  JSQMessage *currentMessage = [self.modelData.messages objectAtIndex:indexPath.item];
+  if ([[currentMessage senderId] isEqualToString:self.senderId]) {
+    return 0.0f;
+  }
+  
+  if (indexPath.item - 1 > 0) {
+    JSQMessage *previousMessage = [self.modelData.messages objectAtIndex:indexPath.item - 1];
+    if ([[previousMessage senderId] isEqualToString:[currentMessage senderId]]) {
+      return 0.0f;
+    }
+  }
+  
+  return kJSQMessagesCollectionViewCellLabelHeightDefault;
+}
+
+- (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
+                   layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellBottomLabelAtIndexPath:(NSIndexPath *)indexPath
+{
+  return 0.0f;
+}
+
+// ------------------------------------------------------------------------------------------------------------------ //
+#pragma mark - Responding to collection view tap events
+
+- (void)collectionView:(JSQMessagesCollectionView *)collectionView
+                header:(JSQMessagesLoadEarlierHeaderView *)headerView didTapLoadEarlierMessagesButton:(UIButton *)sender
+{
+  NSLog(@"Load earlier messages!");
+}
+
+- (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapAvatarImageView:(UIImageView *)avatarImageView atIndexPath:(NSIndexPath *)indexPath
+{
+  NSLog(@"Tapped avatar!");
+}
+
+- (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath
+{
+  NSLog(@"Tapped message bubble!");
+}
+
+- (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapCellAtIndexPath:(NSIndexPath *)indexPath touchLocation:(CGPoint)touchLocation
+{
+  NSLog(@"Tapped cell at %@!", NSStringFromCGPoint(touchLocation));
+}
+
+
+
+
+// ------------------------------------------------------------------------------------------------------------------ //
 #pragma mark - UIViewController overrides
 - (void)viewDidLoad
 {
   [super viewDidLoad];
   
   self.modelData = [[ModelData alloc] init];
-  
   self.title = @"Messages";
   
   self.senderDisplayName = [NSUserDefaults userName];
