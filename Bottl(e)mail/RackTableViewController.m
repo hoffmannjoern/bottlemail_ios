@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Jörn Hoffmann. All rights reserved.
 //
 
-#import "MainTableViewController.h"
+#import "RackTableViewController.h"
 
-@interface MainTableViewController ()
+@interface RackTableViewController ()
 
 @end
 
-@implementation MainTableViewController
+@implementation RackTableViewController
 
 // ------------------------------------------------------------------------------------------------------------------ //
 #pragma mark - Table view data source
@@ -52,7 +52,6 @@
     text = @"Settings";
   }
   
-  
   // Set cell
   cell.textLabel.text = text;
   cell.detailTextLabel.text = detail;
@@ -70,11 +69,10 @@
   // Settings
   if (section == 1 && row == 0)
     [self performSegueWithIdentifier:@"SegueToSettings" sender:self];
+  
+  else
+    [self performSegueWithIdentifier:@"SegueToMessages" sender:self];
 }
-
-
-
-
 
 /*
 // Override to support conditional editing of the table view.

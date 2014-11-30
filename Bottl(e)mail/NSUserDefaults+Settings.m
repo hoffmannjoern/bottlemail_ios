@@ -9,6 +9,7 @@
 #import "NSUserDefaults+Settings.h"
 
 static NSString * const kUserName = @"kUserName";
+static NSString * const kUserId = @"kUserId";
 
 @implementation NSUserDefaults (Settings)
 
@@ -21,5 +22,16 @@ static NSString * const kUserName = @"kUserName";
 {
   [[NSUserDefaults standardUserDefaults] setValue:userName forKey:kUserName];
 }
+
++(NSString*)userId
+{
+  return [[NSUserDefaults standardUserDefaults] stringForKey:kUserId];
+}
+
++(void)saveUserId:(NSString*)userId
+{
+  [[NSUserDefaults standardUserDefaults] setValue:userId forKey:kUserId];
+}
+
 
 @end

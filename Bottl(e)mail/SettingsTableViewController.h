@@ -11,5 +11,8 @@
 @interface SettingsTableViewController : UITableViewController <UITextFieldDelegate>
 
 @property(nonatomic,weak) IBOutlet UITextField *userNameTextField;
+@property(nonatomic,weak) IBOutlet UITextField *userIdTextField;
+
+-(IBAction)generateNewUserId:(id)sender;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "NSUserDefaults+Settings.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   // Override point for customization after application launch.
+  
+  if ([NSUserDefaults userName].length == 0) {
+    [NSUserDefaults saveUserName:@"Me"];
+  }
+  
+  if ([NSUserDefaults userId].length == 0) {
+    [NSUserDefaults saveUserId:[[NSUUID UUID] UUIDString]];
+  }
+  
   return YES;
 }
 

@@ -13,26 +13,38 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+  [super viewDidLoad];
   
-    self.navigationItem.title = @"Settings";
-    self.userNameTextField.text = [NSUserDefaults userName];
+  self.navigationItem.title = @"Settings";
+  
+  // UserName
+  self.userNameTextField.delegate = self;
+  self.userNameTextField.text = [NSUserDefaults userName];
+  
+  // UserId
+  self.userIdTextField.delegate = self;
+  self.userIdTextField.text = [NSUserDefaults userId];
 }
 
 #pragma mark - Text field delegate
--(BOOL)textFieldShouldEndEditing:(UITextField *)textField
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-  return true;
-}
-
--(void)textFieldDidEndEditing:(UITextField *)textField
-{
+  // Save user name
   if (textField == _userNameTextField)
     [NSUserDefaults saveUserName:textField.text];
   
+  else if (textField == _userIdTextField)
+    [NSUserDefaults saveUserId:textField.text];
+  
   [textField resignFirstResponder];
+  return true;
 }
 
-
+-(IBAction)generateNewUserId:(id)sender
+{
+  NSString *uuid = [[NSUUID UUID] UUIDString];
+  [NSUserDefaults saveUserId:uuid];
+  _userIdTextField.text = uuid;
+}
 
 @end

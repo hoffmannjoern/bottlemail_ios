@@ -9,8 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @interface NSUserDefaults (Settings)
+
 +(NSString*)userName;
 +(void)saveUserName:(NSString*)userName;
+
++(NSString*)userId;
++(void)saveUserId:(NSString*)userId;
 
 
 
