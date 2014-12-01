@@ -29,7 +29,6 @@ typedef NS_ENUM(NSUInteger, Attachment) {
 @interface MessagesViewController () <UIActionSheetDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate>
 {
   CLLocationManager *locationManager;
-  NSUInteger locationUpdates;
 }
 @end
 
@@ -93,9 +92,11 @@ typedef NS_ENUM(NSUInteger, Attachment) {
       
     case AttachmentPhotoLibrary:
       [self takePhotoUseCamera:false];
+      break;
       
     case AttachmentLocation:
       [self startLocationUpdates];
+      break;
   }
 }
 
@@ -103,43 +104,42 @@ typedef NS_ENUM(NSUInteger, Attachment) {
 #pragma mark - Location
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-  CLLocation *location = [locations lastObject];
+  static bool updating = false;
   
+  if (updating)
+    return;
+  
+  updating = !updating;
+  
+  CLLocation *location = [locations lastObject];
   if (location.verticalAccuracy < 0 || location.verticalAccuracy > 50 ||
       location.horizontalAccuracy < 0 || location.horizontalAccuracy > 50)
   {
+    updating = false;
     return;
   }
   
+  [manager stopUpdatingLocation];
+  updating = false;
+  
   MessagesViewController __weak *__weakSelf = self;
   [_modelData addLocation:location userId:[NSUserDefaults userId] userName:[NSUserDefaults userName] completion:^{
-    MessagesViewController *self = __weakSelf;
-    [self finishSendingMessage];
+      MessagesViewController *self = __weakSelf;
+      [self finishSendingMessage];
   }];
-  
-  [self stopLocationUpdates];
 }
 
 
 -(void)setupLocationManager
 {
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    locationManager.distanceFilter = kCLDistanceFilterNone;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-  });
+  locationManager = [[CLLocationManager alloc] init];
+  locationManager.delegate = self;
+  locationManager.distanceFilter = kCLDistanceFilterNone;
+  locationManager.desiredAccuracy = kCLLocationAccuracyBest;
 }
 
 -(void)startLocationUpdates
 {
-  if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
-    [locationManager requestWhenInUseAuthorization];
- 
-  locationUpdates = 0;
-  [locationManager startUpdatingLocation];
-  
 #if TARGET_IPHONE_SIMULATOR
   CLLocation *loc = [[CLLocation alloc ] initWithCoordinate:CLLocationCoordinate2DMake(51.32, 12.37)
                                                    altitude:97
@@ -147,7 +147,14 @@ typedef NS_ENUM(NSUInteger, Attachment) {
                                            verticalAccuracy:10
                                                   timestamp:[NSDate date]];
   [self locationManager:locationManager didUpdateLocations:@[loc]];
+  return;
 #endif
+  
+  
+  if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+    [locationManager requestWhenInUseAuthorization];
+  
+  [locationManager startUpdatingLocation];
 }
 
 -(void)stopLocationUpdates

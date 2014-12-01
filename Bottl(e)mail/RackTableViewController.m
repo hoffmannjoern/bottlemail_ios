@@ -61,7 +61,7 @@ typedef NS_ENUM(NSUInteger, Section) {
   NSUInteger section = indexPath.section;
   if (section == SectionBottles)
   {
-    text = [NSString stringWithFormat:@"Bottle %lu", indexPath.row];
+    text = [NSString stringWithFormat:@"Bottle %lu", (unsigned long)indexPath.row];
     detail = @(-22).stringValue;
   }
   

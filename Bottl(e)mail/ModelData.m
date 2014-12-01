@@ -47,7 +47,7 @@ static NSString *const kLongitude = @"long";
 
 -(NSString*)nameForBottleIndex:(NSUInteger)index
 {
-  return [NSString stringWithFormat:@"bottle_%lu", index];
+  return [NSString stringWithFormat:@"bottle_%lu", (unsigned long) index];
 }
 
 -(NSString*)pathForBottleName:(NSString*)name
