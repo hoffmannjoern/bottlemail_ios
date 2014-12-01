@@ -74,9 +74,11 @@ typedef NS_ENUM(NSUInteger, Attachment) {
 
 // ------------------------------------------------------------------------------------------------------------------ //
 #pragma mark - Actions
--(void)refreshMessages:(UIBarButtonItem *)sender
+-(void)deleteLastMessage:(UIBarButtonItem *)sender
 {
-  
+  [_modelData.messages removeLastObject];
+  [self finishSendingMessage];
+  [self finishReceivingMessage];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -148,13 +150,14 @@ typedef NS_ENUM(NSUInteger, Attachment) {
                                                   timestamp:[NSDate date]];
   [self locationManager:locationManager didUpdateLocations:@[loc]];
   return;
-#endif
-  
+#else
   
   if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
     [locationManager requestWhenInUseAuthorization];
   
   [locationManager startUpdatingLocation];
+
+#endif
 }
 
 -(void)stopLocationUpdates
@@ -466,9 +469,9 @@ typedef NS_ENUM(NSUInteger, Attachment) {
   // Navigation setup
   self.showLoadEarlierMessagesHeader = false;
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]
-                                            initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                            initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
                                             target:self
-                                            action:@selector(refreshMessages:)];
+                                            action:@selector(deleteLastMessage:)];
   
   // Location updates
   [self setupLocationManager];
