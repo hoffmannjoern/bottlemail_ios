@@ -14,7 +14,11 @@
 // Message
 #import <JSQMessage.h>
 #import <JSQMessagesBubbleImageFactory.h>
+
+// Media
 #import <JSQPhotoMediaItem.h>
+#import <JSQLocationMediaItem.h>
+
 
 static NSString *basePath = nil;
 static NSString *const kUserId = @"userId";
@@ -52,16 +56,36 @@ static NSString *const kLongitude = @"long";
 }
 
 // -----------------------------------------------------------------------------------------------------------------  //
-#pragma mark - Media
+#pragma mark - Message Adding
 - (void)addImageMessage:(UIImage*)image userId:(NSString*)userId userName:(NSString*)userName
 {
+  if (!image)
+    return;
+
+  // Compute media item.
   JSQPhotoMediaItem *photoItem = [[JSQPhotoMediaItem alloc] initWithImage:image];
-  JSQMessage *photoMessage = [JSQMessage messageWithSenderId:userId
-                                                 displayName:userName
-                                                       media:photoItem];
+  JSQMessage *photoMessage = [JSQMessage messageWithSenderId:userId displayName:userName media:photoItem];
   [self.messages addObject:photoMessage];
 }
 
+
+-(void)addLocation:(CLLocation*)location userId:(NSString*)userId userName:(NSString*)userName completion:(CompletionBlock)completion
+{
+  if (!location)
+  {
+    if (completion)
+      completion();
+
+    return;
+  }
+  
+  // Compute location minimap
+  JSQLocationMediaItem *locationItem = [[JSQLocationMediaItem alloc] init];
+  [locationItem setLocation:location withCompletionHandler:completion];
+  JSQMessage *locationMessage = [JSQMessage messageWithSenderId:userId displayName:userName media:locationItem];
+  
+  [self.messages addObject:locationMessage];
+}
 
 // -----------------------------------------------------------------------------------------------------------------  //
 #pragma mark - Image Encoding
@@ -150,8 +174,6 @@ static NSString *const kLongitude = @"long";
 
 // -----------------------------------------------------------------------------------------------------------------  //
 #pragma mark - Deserialization from JSON
-
-
 -(NSMutableArray*)messagesFormJsonArray:(NSArray*)jsonArray
 {
   NSMutableArray *array = [[NSMutableArray alloc] init];

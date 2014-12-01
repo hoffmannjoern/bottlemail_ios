@@ -8,6 +8,9 @@
 
 #import "MessagesViewController.h"
 
+// Location
+#import <CoreLocation/CoreLocation.h>
+
 // Chat
 #import <JSQMessage.h>
 #import <JSQSystemSoundPlayer.h>
@@ -23,17 +26,14 @@ typedef NS_ENUM(NSUInteger, Attachment) {
   AttachmentLocation
 };
 
-
-
-@interface MessagesViewController () <UIActionSheetDelegate, UIImagePickerControllerDelegate>
+@interface MessagesViewController () <UIActionSheetDelegate, UIImagePickerControllerDelegate, CLLocationManagerDelegate>
+{
+  CLLocationManager *locationManager;
+  NSUInteger locationUpdates;
+}
 @end
 
 @implementation MessagesViewController
-
--(void)refreshMessages:(UIBarButtonItem *)sender
-{
-  
-}
 
 // ------------------------------------------------------------------------------------------------------------------ //
 #pragma mark - JSQMessagesViewController method overrides
@@ -68,13 +68,18 @@ typedef NS_ENUM(NSUInteger, Attachment) {
                                                      delegate:self
                                             cancelButtonTitle:@"Cancel"
                                        destructiveButtonTitle:nil
-                                            otherButtonTitles:@"Camera", @"Photo library", nil];
+                                            otherButtonTitles:@"Camera", @"Photo library", @"Location", nil];
   
   [sheet showFromToolbar:self.inputToolbar];
 }
 
 // ------------------------------------------------------------------------------------------------------------------ //
-#pragma mark - UIActionSheet delegate (Attachment)
+#pragma mark - Actions
+-(void)refreshMessages:(UIBarButtonItem *)sender
+{
+  
+}
+
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
   if (buttonIndex == actionSheet.cancelButtonIndex)
@@ -90,17 +95,64 @@ typedef NS_ENUM(NSUInteger, Attachment) {
       [self takePhotoUseCamera:false];
       
     case AttachmentLocation:
-    {
-      /*
-       __weak UICollectionView *weakView = self.collectionView;
-       
-       [self.demoData addLocationMediaMessageCompletion:^{
-       [weakView reloadData];
-       }];
-       */
-    }
-      break;
+      [self startLocationUpdates];
   }
+}
+
+// ------------------------------------------------------------------------------------------------------------------ //
+#pragma mark - Location
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+  CLLocation *location = [locations lastObject];
+  
+  if (location.verticalAccuracy < 0 || location.verticalAccuracy > 50 ||
+      location.horizontalAccuracy < 0 || location.horizontalAccuracy > 50)
+  {
+    return;
+  }
+  
+  MessagesViewController __weak *__weakSelf = self;
+  [_modelData addLocation:location userId:[NSUserDefaults userId] userName:[NSUserDefaults userName] completion:^{
+    MessagesViewController *self = __weakSelf;
+    [self finishSendingMessage];
+  }];
+  
+  [self stopLocationUpdates];
+}
+
+
+-(void)setupLocationManager
+{
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    locationManager = [[CLLocationManager alloc] init];
+    locationManager.delegate = self;
+    locationManager.distanceFilter = kCLDistanceFilterNone;
+    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+  });
+}
+
+-(void)startLocationUpdates
+{
+  if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+    [locationManager requestWhenInUseAuthorization];
+ 
+  locationUpdates = 0;
+  [locationManager startUpdatingLocation];
+  
+#if TARGET_IPHONE_SIMULATOR
+  CLLocation *loc = [[CLLocation alloc ] initWithCoordinate:CLLocationCoordinate2DMake(51.32, 12.37)
+                                                   altitude:97
+                                         horizontalAccuracy:10
+                                           verticalAccuracy:10
+                                                  timestamp:[NSDate date]];
+  [self locationManager:locationManager didUpdateLocations:@[loc]];
+#endif
+}
+
+-(void)stopLocationUpdates
+{
+  [locationManager stopUpdatingLocation];
 }
 
 // ------------------------------------------------------------------------------------------------------------------ //
@@ -410,6 +462,9 @@ typedef NS_ENUM(NSUInteger, Attachment) {
                                             initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
                                             target:self
                                             action:@selector(refreshMessages:)];
+  
+  // Location updates
+  [self setupLocationManager];
 }
 
 /*

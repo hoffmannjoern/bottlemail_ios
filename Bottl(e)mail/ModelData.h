@@ -9,7 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class  JSQMessagesBubbleImage;
+@class JSQMessagesBubbleImage;
+@class CLLocation;
+
+/**
+ *  A completion handler block for addLocation.
+ */
+typedef void (^CompletionBlock)(void);
+
+
 
 @interface ModelData : NSObject
 
@@ -18,6 +26,7 @@
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
 
 -(void)addImageMessage:(UIImage*)image userId:(NSString*)userId userName:(NSString*)userName;
+-(void)addLocation:(CLLocation*)location userId:(NSString*)userId userName:(NSString*)userName completion:(CompletionBlock)completion;
 -(instancetype)initBottleIndex:(NSUInteger)bottleIndex;
 
 @end
