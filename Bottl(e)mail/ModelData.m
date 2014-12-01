@@ -132,11 +132,21 @@ static NSString *const kLongitude = @"long";
   dict[kText] = message.text;
 }
 
--(void)extractPhotoFromMessage:(JSQPhotoMediaItem*)photo toDictionary:(NSMutableDictionary*)dict
+-(void)extractPhotoFromMedia:(JSQMediaItem*)media toDictionary:(NSMutableDictionary*)dict
 {
+  JSQPhotoMediaItem *photo = (JSQPhotoMediaItem*)media;
+  
   NSString *base64Image = [self base64EncodedStringFromImage:photo.image];
   if (base64Image)
     dict[kImage] = base64Image;
+}
+
+-(void)extractLocationFromMedia:(JSQMediaItem*)media toDictionary:(NSMutableDictionary*)dict
+{
+  JSQLocationMediaItem *locationItem = (JSQLocationMediaItem*)media;
+  CLLocation *location = locationItem.location;
+  dict[kLatitude] = @(location.coordinate.latitude);
+  dict[kLongitude] = @(location.coordinate.longitude);
 }
 
 -(void)extractMediaFromMessage:(JSQMessage*)message toDictionary:(NSMutableDictionary*)dict
@@ -145,10 +155,11 @@ static NSString *const kLongitude = @"long";
   
   // Photo
   if ([media isKindOfClass:[JSQPhotoMediaItem class]])
-    [self extractPhotoFromMessage:(JSQPhotoMediaItem*)media toDictionary:dict];
+    [self extractPhotoFromMedia:media toDictionary:dict];
   
   // Location
-  // TODO...
+  else if ([media isKindOfClass:[JSQLocationMediaItem class]])
+    [self extractLocationFromMedia:media toDictionary:dict];
 }
 
 -(NSArray*)jsonArrayFromMessages
@@ -210,6 +221,17 @@ static NSString *const kLongitude = @"long";
         message = [[JSQMessage alloc] initWithSenderId:userId senderDisplayName:userName date:date media:photo];
         [array addObject:message];
       }
+    }
+    
+    // Location
+    NSNumber *latitude = item[kLatitude];
+    NSNumber *longitude = item[kLongitude];
+    if (latitude && longitude)
+    {
+      CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude.doubleValue longitude:longitude.doubleValue];
+      JSQLocationMediaItem *locationItem = [[JSQLocationMediaItem alloc] initWithLocation:location];
+      message = [[JSQMessage alloc] initWithSenderId:userId senderDisplayName:userName date:date media:locationItem];
+      [array addObject:message];
     }
   }
   
