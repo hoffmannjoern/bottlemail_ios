@@ -24,6 +24,10 @@
   // UserId
   self.userIdTextField.delegate = self;
   self.userIdTextField.text = [NSUserDefaults userId];
+  
+  // Set background image
+  self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_blurred"]];
+  self.tableView.backgroundView.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 #pragma mark - Text field delegate

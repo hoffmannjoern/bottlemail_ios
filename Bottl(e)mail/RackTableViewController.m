@@ -156,6 +156,10 @@ typedef NS_ENUM(NSUInteger, Section) {
   
   // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
   // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+  
+  // Set background image
+  self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_blurred"]];
+  self.tableView.backgroundView.contentMode = UIViewContentModeScaleAspectFit;
 }
 
 - (void)didReceiveMemoryWarning {
