@@ -68,7 +68,7 @@ typedef NS_ENUM(NSUInteger, Attachment) {
                                                      delegate:self
                                             cancelButtonTitle:@"Cancel"
                                        destructiveButtonTitle:nil
-                                            otherButtonTitles:@"Take photo", @"Add photo", nil];
+                                            otherButtonTitles:@"Camera", @"Photo library", nil];
   
   [sheet showFromToolbar:self.inputToolbar];
 }
@@ -101,9 +101,6 @@ typedef NS_ENUM(NSUInteger, Attachment) {
     }
       break;
   }
-  
-  // [JSQSystemSoundPlayer jsq_playMessageSentSound];
-  [self finishSendingMessage];
 }
 
 // ------------------------------------------------------------------------------------------------------------------ //
@@ -147,11 +144,13 @@ typedef NS_ENUM(NSUInteger, Attachment) {
     [_modelData addImageMessage:chosenImage userId:[NSUserDefaults userId] userName:[NSUserDefaults userName]];
   
   [picker dismissViewControllerAnimated:YES completion:NULL];
+  [self finishSendingMessage];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
   [picker dismissViewControllerAnimated:YES completion:NULL];
+  [self finishSendingMessage];
 }
 
 // ------------------------------------------------------------------------------------------------------------------ //
