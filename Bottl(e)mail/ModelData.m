@@ -38,9 +38,7 @@ static NSString *const kLongitude = @"long";
 }
 @end
 
-
 @implementation ModelData
-
 
 // -----------------------------------------------------------------------------------------------------------------  //
 #pragma mark - Path helper

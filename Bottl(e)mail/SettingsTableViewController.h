@@ -12,7 +12,9 @@
 
 @property(nonatomic,weak) IBOutlet UITextField *userNameTextField;
 @property(nonatomic,weak) IBOutlet UITextField *userIdTextField;
+@property(nonatomic,weak) IBOutlet UISwitch    *canDeleteLastMessageSwitch;
 
 -(IBAction)generateNewUserId:(id)sender;
+-(IBAction)didTapSwitch:(UISwitch *)sender;
 
 @end

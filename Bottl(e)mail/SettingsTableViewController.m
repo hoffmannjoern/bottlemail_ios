@@ -25,6 +25,9 @@
   self.userIdTextField.delegate = self;
   self.userIdTextField.text = [NSUserDefaults userId];
   
+  // Allow delete
+  self.canDeleteLastMessageSwitch.on = [NSUserDefaults canDeleteLastMessage];
+  
   // Set background image
   self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_blurred"]];
   self.tableView.backgroundView.contentMode = UIViewContentModeScaleAspectFit;
@@ -50,5 +53,12 @@
   [NSUserDefaults saveUserId:uuid];
   _userIdTextField.text = uuid;
 }
+
+-(IBAction)didTapSwitch:(UISwitch *)sender
+{
+  if (sender == _canDeleteLastMessageSwitch)
+    [NSUserDefaults saveCanDeleteLastMessage:sender.on];
+}
+
 
 @end

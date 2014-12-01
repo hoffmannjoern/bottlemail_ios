@@ -16,6 +16,8 @@
 +(NSString*)userId;
 +(void)saveUserId:(NSString*)userId;
 
++(BOOL)canDeleteLastMessage;
++(void)saveCanDeleteLastMessage:(BOOL)canDelete;
 
 
 @end

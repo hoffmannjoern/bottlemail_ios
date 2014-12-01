@@ -8,8 +8,9 @@
 
 #import "NSUserDefaults+Settings.h"
 
-static NSString * const kUserName = @"kUserName";
-static NSString * const kUserId = @"kUserId";
+static NSString *const kUserName = @"kUserName";
+static NSString *const kUserId = @"kUserId";
+static NSString *const kCanDeleteLastMessage = @"kCanDeleteLastMessage";
 
 @implementation NSUserDefaults (Settings)
 
@@ -32,6 +33,17 @@ static NSString * const kUserId = @"kUserId";
 {
   [[NSUserDefaults standardUserDefaults] setValue:userId forKey:kUserId];
 }
+
++(BOOL)canDeleteLastMessage
+{
+  return [[NSUserDefaults standardUserDefaults] boolForKey:kCanDeleteLastMessage];
+}
+
++(void)saveCanDeleteLastMessage:(BOOL)canDelete
+{
+  [[NSUserDefaults standardUserDefaults] setBool:canDelete forKey:kCanDeleteLastMessage];
+}
+
 
 
 @end

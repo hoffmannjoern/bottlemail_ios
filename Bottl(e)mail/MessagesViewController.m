@@ -474,17 +474,26 @@ typedef NS_ENUM(NSUInteger, Attachment) {
   // Navigation setup
   self.showLoadEarlierMessagesHeader = false;
   
-  UIBarButtonItem *delete = [[UIBarButtonItem alloc]
-                             initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
-                             target:self
-                             action:@selector(deleteLastMessage:)];
+  NSMutableArray *buttons = [[NSMutableArray alloc] init];
+  UIBarButtonItem *button;
   
-  UIBarButtonItem *refresh =  [[UIBarButtonItem alloc]
-                               initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
-                               target:self
-                               action:@selector(refreshMessages:)];
+  if ([NSUserDefaults canDeleteLastMessage])
+  {
+    button = [[UIBarButtonItem alloc]
+              initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
+              target:self
+              action:@selector(deleteLastMessage:)];
+
+    [buttons addObject:button];
+  }
   
-  self.navigationItem.rightBarButtonItems = @[refresh, delete];
+  button = [[UIBarButtonItem alloc]
+            initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+            target:self
+            action:@selector(refreshMessages:)];
+  
+  [buttons addObject:button];
+  self.navigationItem.rightBarButtonItems = buttons;
   
   // Location updates
   [self setupLocationManager];

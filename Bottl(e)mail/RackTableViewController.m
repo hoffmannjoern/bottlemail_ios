@@ -40,7 +40,7 @@ typedef NS_ENUM(NSUInteger, Section) {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
   if (section == SectionBottles)
-    return 2;
+    return 3;
   
   else if (section == SectionSettings)
     return 1;
