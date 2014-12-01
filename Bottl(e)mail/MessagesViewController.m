@@ -17,7 +17,15 @@
 #import "ModelData.h"
 #import "NSUserDefaults+Settings.h"
 
-@interface MessagesViewController () <UIActionSheetDelegate>
+typedef NS_ENUM(NSUInteger, Attachment) {
+  AttachmentCamera = 0,
+  AttachmentPhotoLibrary,
+  AttachmentLocation
+};
+
+
+
+@interface MessagesViewController () <UIActionSheetDelegate, UIImagePickerControllerDelegate>
 @end
 
 @implementation MessagesViewController
@@ -60,23 +68,28 @@
                                                      delegate:self
                                             cancelButtonTitle:@"Cancel"
                                        destructiveButtonTitle:nil
-                                            otherButtonTitles:@"Add photo", @"Add location", nil];
+                                            otherButtonTitles:@"Take photo", @"Add photo", nil];
   
   [sheet showFromToolbar:self.inputToolbar];
 }
 
+// ------------------------------------------------------------------------------------------------------------------ //
+#pragma mark - UIActionSheet delegate (Attachment)
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-  if (buttonIndex == actionSheet.cancelButtonIndex) {
+  if (buttonIndex == actionSheet.cancelButtonIndex)
     return;
-  }
   
-  switch (buttonIndex) {
-    case 0:
-      [_modelData addImageMessage:[UIImage imageNamed:@"logo"] userId:[NSUserDefaults userId] userName:[NSUserDefaults userName]];
+  switch (buttonIndex)
+  {
+    case AttachmentCamera:
+      [self takePhotoUseCamera:true];
       break;
       
-    case 1:
+    case AttachmentPhotoLibrary:
+      [self takePhotoUseCamera:false];
+      
+    case AttachmentLocation:
     {
       /*
        __weak UICollectionView *weakView = self.collectionView;
@@ -91,6 +104,54 @@
   
   // [JSQSystemSoundPlayer jsq_playMessageSentSound];
   [self finishSendingMessage];
+}
+
+// ------------------------------------------------------------------------------------------------------------------ //
+#pragma mark - Photo Taking
+-(BOOL)isCameraAvailable
+{
+  return [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+}
+
+-(void)showCameraWarning
+{
+  UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"Device has no camera."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles: nil];
+  
+  [myAlertView show];
+}
+
+-(void)takePhotoUseCamera:(BOOL)camera
+{
+  if (camera && ![self isCameraAvailable])
+  {
+    [self showCameraWarning];
+    return;
+  }
+  
+  UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+  picker.delegate = (id)self;
+  picker.allowsEditing = YES;
+  picker.sourceType = camera ? UIImagePickerControllerSourceTypeCamera : UIImagePickerControllerSourceTypePhotoLibrary;
+  
+  [self presentViewController:picker animated:YES completion:NULL];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+  UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+  if (chosenImage)
+    [_modelData addImageMessage:chosenImage userId:[NSUserDefaults userId] userName:[NSUserDefaults userName]];
+  
+  [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+  [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
 // ------------------------------------------------------------------------------------------------------------------ //
@@ -331,7 +392,7 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-
+  
   self.title = @"Messages";
   if (!_modelData) {
     _modelData = [[ModelData alloc] init];
