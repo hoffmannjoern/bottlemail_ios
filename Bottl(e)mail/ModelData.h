@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 @class  JSQMessagesBubbleImage;
 
 @interface ModelData : NSObject
@@ -15,7 +17,7 @@
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
 
-
+-(void)addImageMessage:(UIImage*)image userId:(NSString*)userId userName:(NSString*)userName;
 -(instancetype)initBottleIndex:(NSUInteger)bottleIndex;
 
 @end

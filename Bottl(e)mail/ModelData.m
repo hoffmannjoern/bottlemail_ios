@@ -7,14 +7,25 @@
 //
 
 #import "ModelData.h"
+
+// Base Encoder
+#import <NSData+Base64.h>
+
+// Message
 #import <JSQMessage.h>
 #import <JSQMessagesBubbleImageFactory.h>
+#import <JSQPhotoMediaItem.h>
 
 static NSString *basePath = nil;
 static NSString *const kUserId = @"userId";
 static NSString *const kUserName = @"userName";
-static NSString *const kText = @"text";
 static NSString *const kDate = @"date";
+
+// Media
+static NSString *const kText = @"text";
+static NSString *const kImage = @"image";
+static NSString *const kLatitude = @"lat";
+static NSString *const kLongitude = @"long";
 
 @interface ModelData()
 {
@@ -40,6 +51,82 @@ static NSString *const kDate = @"date";
   return [[basePath stringByAppendingPathComponent:name] stringByAppendingPathExtension:@"json"];
 }
 
+// -----------------------------------------------------------------------------------------------------------------  //
+#pragma mark - Media
+- (void)addImageMessage:(UIImage*)image userId:(NSString*)userId userName:(NSString*)userName
+{
+  JSQPhotoMediaItem *photoItem = [[JSQPhotoMediaItem alloc] initWithImage:image];
+  JSQMessage *photoMessage = [JSQMessage messageWithSenderId:userId
+                                                 displayName:userName
+                                                       media:photoItem];
+  [self.messages addObject:photoMessage];
+}
+
+
+// -----------------------------------------------------------------------------------------------------------------  //
+#pragma mark - Image Encoding
+-(NSString*)base64EncodedStringFromImage:(UIImage*)image
+{
+  NSString *imageString = nil;
+  if (image)
+  {
+    NSData *jpegData = UIImageJPEGRepresentation(image, 0.7);
+    imageString = [jpegData base64EncodedString];
+  }
+  
+  return imageString;
+}
+
+-(UIImage*)imageFromBase64EncodedString:(NSString*)imageString
+{
+  if (!imageString)
+    return nil;
+  
+  NSData *data = [NSData dataFromBase64String:imageString];
+  if (!data)
+    return nil;
+  
+  return [[UIImage alloc] initWithData:data];
+}
+
+// -----------------------------------------------------------------------------------------------------------------  //
+#pragma mark - Serialization to JSON
+
+-(void)extractUserFromMessage:(JSQMessage*)message toDictionary:(NSMutableDictionary*)dict
+{
+  dict[kUserId] = message.senderId;
+  dict[kUserName] = message.senderDisplayName;
+}
+
+-(void)extractDateFromMessage:(JSQMessage*)message toDictionary:(NSMutableDictionary*)dict
+{
+  dict[kDate] = [NSNumber numberWithDouble:message.date.timeIntervalSinceReferenceDate];
+}
+
+-(void)extractTextFromMessage:(JSQMessage*)message toDictionary:(NSMutableDictionary*)dict
+{
+  dict[kText] = message.text;
+}
+
+-(void)extractPhotoFromMessage:(JSQPhotoMediaItem*)photo toDictionary:(NSMutableDictionary*)dict
+{
+  NSString *base64Image = [self base64EncodedStringFromImage:photo.image];
+  if (base64Image)
+    dict[kImage] = base64Image;
+}
+
+-(void)extractMediaFromMessage:(JSQMessage*)message toDictionary:(NSMutableDictionary*)dict
+{
+  JSQMediaItem *media = (JSQMediaItem*) message.media;
+  
+  // Photo
+  if ([media isKindOfClass:[JSQPhotoMediaItem class]])
+    [self extractPhotoFromMessage:(JSQPhotoMediaItem*)media toDictionary:dict];
+  
+  // Location
+  // TODO...
+}
+
 -(NSArray*)jsonArrayFromMessages
 {
   NSMutableArray *jsonArray = [[NSMutableArray alloc] init];
@@ -47,15 +134,23 @@ static NSString *const kDate = @"date";
   for (JSQMessage *message in _messages)
   {
     NSMutableDictionary *item = [[NSMutableDictionary alloc] init];
-    [item setObject:message.senderId forKey:kUserId];
-    [item setObject:message.senderDisplayName forKey:kUserName];
-    [item setObject:message.text forKey:kText];
-    [item setObject:[NSNumber numberWithDouble:message.date.timeIntervalSinceReferenceDate] forKey:kDate];
+    [self extractUserFromMessage:message toDictionary:item];
+    [self extractDateFromMessage:message toDictionary:item];
+    
+    if (message.isMediaMessage)
+      [self extractMediaFromMessage:message toDictionary:item];
+    else
+      [self extractTextFromMessage:message toDictionary:item];
+    
     [jsonArray addObject:item];
   }
   
   return jsonArray;
 }
+
+// -----------------------------------------------------------------------------------------------------------------  //
+#pragma mark - Deserialization from JSON
+
 
 -(NSMutableArray*)messagesFormJsonArray:(NSArray*)jsonArray
 {
@@ -63,16 +158,37 @@ static NSString *const kDate = @"date";
   
   for (NSDictionary *item in jsonArray)
   {
+    JSQMessage *message = nil;
+    
+    // User
     NSString *userId = item[kUserId] ? : @"0";
     NSString *userName = item[kUserName] ? : @"anonymous";
-    NSString *text = item[kText] ?  : @"";
-    
+
     // Date
     NSNumber *timeInterval = item[kDate];
     NSDate *date = timeInterval ? [NSDate dateWithTimeIntervalSinceReferenceDate:timeInterval.doubleValue] : [NSDate date];
     
-    JSQMessage *message = [[JSQMessage alloc] initWithSenderId:userId senderDisplayName:userName date:date text:text];
-    [array addObject:message];
+    
+    // Text
+    NSString *text = item[kText];
+    if (text)
+    {
+      message = [[JSQMessage alloc] initWithSenderId:userId senderDisplayName:userName date:date text:text];
+     [array addObject:message];
+    }
+    
+    // Image
+    NSString *base64Image = item[kImage];
+    if (base64Image)
+    {
+      UIImage *image = [self imageFromBase64EncodedString:base64Image];
+      if (image)
+      {
+        JSQPhotoMediaItem *photo = [[JSQPhotoMediaItem alloc] initWithImage:image];
+        message = [[JSQMessage alloc] initWithSenderId:userId senderDisplayName:userName date:date media:photo];
+        [array addObject:message];
+      }
+    }
   }
   
   return array;

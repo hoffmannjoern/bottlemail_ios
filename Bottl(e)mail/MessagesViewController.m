@@ -73,7 +73,7 @@
   
   switch (buttonIndex) {
     case 0:
-      // [self.demoData addPhotoMediaMessage];
+      [_modelData addImageMessage:[UIImage imageNamed:@"logo"] userId:[NSUserDefaults userId] userName:[NSUserDefaults userName]];
       break;
       
     case 1:

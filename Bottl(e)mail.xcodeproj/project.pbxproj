@@ -10,6 +10,7 @@
 		802C04E31A2B4FA7003A7D49 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 802C04E21A2B4FA7003A7D49 /* MessagesViewController.m */; };
 		802C04E61A2B503C003A7D49 /* ModelData.m in Sources */ = {isa = PBXBuildFile; fileRef = 802C04E51A2B503C003A7D49 /* ModelData.m */; };
 		802C04EC1A2C4557003A7D49 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 802C04EB1A2C4557003A7D49 /* Media.xcassets */; };
+		802C04EE1A2CBE12003A7D49 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 802C04ED1A2CBE12003A7D49 /* logo.png */; };
 		8093BF291A2B339A0058BB9B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8093BF281A2B339A0058BB9B /* main.m */; };
 		8093BF2C1A2B339A0058BB9B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8093BF2B1A2B339A0058BB9B /* AppDelegate.m */; };
 		8093BF321A2B339A0058BB9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8093BF301A2B339A0058BB9B /* Main.storyboard */; };
@@ -40,6 +41,7 @@
 		802C04E41A2B503C003A7D49 /* ModelData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelData.h; sourceTree = "<group>"; };
 		802C04E51A2B503C003A7D49 /* ModelData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelData.m; sourceTree = "<group>"; };
 		802C04EB1A2C4557003A7D49 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		802C04ED1A2CBE12003A7D49 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		8093BF231A2B339A0058BB9B /* Bottl(e)mail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bottl(e)mail.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8093BF271A2B339A0058BB9B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8093BF281A2B339A0058BB9B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 		8093BF261A2B339A0058BB9B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				802C04ED1A2CBE12003A7D49 /* logo.png */,
 				8093BF271A2B339A0058BB9B /* Info.plist */,
 				8093BF281A2B339A0058BB9B /* main.m */,
 			);
@@ -246,6 +249,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				802C04EE1A2CBE12003A7D49 /* logo.png in Resources */,
 				8093BF321A2B339A0058BB9B /* Main.storyboard in Resources */,
 				8093BF371A2B339A0058BB9B /* LaunchScreen.xib in Resources */,
 				802C04EC1A2C4557003A7D49 /* Media.xcassets in Resources */,
