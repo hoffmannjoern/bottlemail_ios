@@ -9,10 +9,10 @@
 /* Begin PBXBuildFile section */
 		802C04E31A2B4FA7003A7D49 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 802C04E21A2B4FA7003A7D49 /* MessagesViewController.m */; };
 		802C04E61A2B503C003A7D49 /* ModelData.m in Sources */ = {isa = PBXBuildFile; fileRef = 802C04E51A2B503C003A7D49 /* ModelData.m */; };
+		802C04EC1A2C4557003A7D49 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 802C04EB1A2C4557003A7D49 /* Media.xcassets */; };
 		8093BF291A2B339A0058BB9B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8093BF281A2B339A0058BB9B /* main.m */; };
 		8093BF2C1A2B339A0058BB9B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8093BF2B1A2B339A0058BB9B /* AppDelegate.m */; };
 		8093BF321A2B339A0058BB9B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8093BF301A2B339A0058BB9B /* Main.storyboard */; };
-		8093BF341A2B339A0058BB9B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8093BF331A2B339A0058BB9B /* Images.xcassets */; };
 		8093BF371A2B339A0058BB9B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8093BF351A2B339A0058BB9B /* LaunchScreen.xib */; };
 		8093BF431A2B339A0058BB9B /* Bottl_e_mailTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8093BF421A2B339A0058BB9B /* Bottl_e_mailTests.m */; };
 		8093BF4E1A2B36820058BB9B /* RackTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8093BF4D1A2B36820058BB9B /* RackTableViewController.m */; };
@@ -39,13 +39,13 @@
 		802C04E21A2B4FA7003A7D49 /* MessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesViewController.m; sourceTree = "<group>"; };
 		802C04E41A2B503C003A7D49 /* ModelData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelData.h; sourceTree = "<group>"; };
 		802C04E51A2B503C003A7D49 /* ModelData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelData.m; sourceTree = "<group>"; };
+		802C04EB1A2C4557003A7D49 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		8093BF231A2B339A0058BB9B /* Bottl(e)mail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bottl(e)mail.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8093BF271A2B339A0058BB9B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8093BF281A2B339A0058BB9B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8093BF2A1A2B339A0058BB9B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8093BF2B1A2B339A0058BB9B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		8093BF311A2B339A0058BB9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		8093BF331A2B339A0058BB9B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		8093BF361A2B339A0058BB9B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		8093BF3C1A2B339A0058BB9B /* Bottl(e)mailTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Bottl(e)mailTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8093BF411A2B339A0058BB9B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -109,10 +109,10 @@
 		8093BF251A2B339A0058BB9B /* Bottl(e)mail */ = {
 			isa = PBXGroup;
 			children = (
+				802C04EB1A2C4557003A7D49 /* Media.xcassets */,
 				8093BF2A1A2B339A0058BB9B /* AppDelegate.h */,
 				8093BF2B1A2B339A0058BB9B /* AppDelegate.m */,
 				8093BF301A2B339A0058BB9B /* Main.storyboard */,
-				8093BF331A2B339A0058BB9B /* Images.xcassets */,
 				8093BF351A2B339A0058BB9B /* LaunchScreen.xib */,
 				8093BF261A2B339A0058BB9B /* Supporting Files */,
 				8093BF4C1A2B36820058BB9B /* RackTableViewController.h */,
@@ -248,7 +248,7 @@
 			files = (
 				8093BF321A2B339A0058BB9B /* Main.storyboard in Resources */,
 				8093BF371A2B339A0058BB9B /* LaunchScreen.xib in Resources */,
-				8093BF341A2B339A0058BB9B /* Images.xcassets in Resources */,
+				802C04EC1A2C4557003A7D49 /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,6 +430,7 @@
 			baseConfigurationReference = 07728821116F57B94E4C8490 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = "Bottl(e)mail/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -442,6 +443,7 @@
 			baseConfigurationReference = 502B988E75D515973E0F85E2 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = "Bottl(e)mail/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
