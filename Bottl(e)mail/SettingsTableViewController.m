@@ -11,6 +11,11 @@
 
 @implementation SettingsTableViewController
 
+-(void)setBottlesCount:(NSUInteger)bottles
+{
+  self.bottlesLabel.text = [NSString stringWithFormat:@"%lu", bottles];
+}
+
 - (void)viewDidLoad
 {
   [super viewDidLoad];
@@ -25,6 +30,11 @@
   self.userIdTextField.delegate = self;
   self.userIdTextField.text = [NSUserDefaults userId];
   
+  // Bottles
+  NSUInteger bottles = [NSUserDefaults bottlesNumber];
+  self.bottlesStepper.value = bottles;
+  [self setBottlesCount:bottles];
+
   // Allow delete
   self.canDeleteLastMessageSwitch.on = [NSUserDefaults canDeleteLastMessage];
   
@@ -52,6 +62,15 @@
   NSString *uuid = [[NSUUID UUID] UUIDString];
   [NSUserDefaults saveUserId:uuid];
   _userIdTextField.text = uuid;
+}
+
+-(IBAction)updateStepper:(UIStepper*)sender
+{
+  if (sender == _bottlesStepper)
+  {
+    [self setBottlesCount:sender.value];
+    [NSUserDefaults saveBottlesNumber:sender.value];
+  }
 }
 
 -(IBAction)didTapSwitch:(UISwitch *)sender

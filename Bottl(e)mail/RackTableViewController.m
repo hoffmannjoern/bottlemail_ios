@@ -9,6 +9,7 @@
 #import "RackTableViewController.h"
 #import "MessagesViewController.h"
 #import "ModelData.h"
+#import "NSUserDefaults+Settings.h"
 
 static NSString *const segueToMessages = @"SegueToMessages";
 static NSString *const segueToSettings = @"SegueToSettings";
@@ -22,6 +23,8 @@ typedef NS_ENUM(NSUInteger, Section) {
 @interface RackTableViewController ()
 {
   NSUInteger _selectedRow;
+  NSMutableArray *rssi;
+  NSTimer *_timer;
 }
 
 @end
@@ -40,7 +43,16 @@ typedef NS_ENUM(NSUInteger, Section) {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
   if (section == SectionBottles)
-    return 3;
+  {
+    NSUInteger bottles = [NSUserDefaults bottlesNumber];
+    rssi = [[NSMutableArray alloc] initWithCapacity:bottles];
+    
+    for (int i = 0; i < bottles; i++) {
+      [rssi addObject:@(-40 - (10 * ((rand() % 5))) - ((rand() % 10) +1))];
+    }
+    
+    return bottles;
+  }
   
   else if (section == SectionSettings)
     return 1;
@@ -62,7 +74,7 @@ typedef NS_ENUM(NSUInteger, Section) {
   if (section == SectionBottles)
   {
     text = [NSString stringWithFormat:@"Bottle %lu", (unsigned long)indexPath.row];
-    detail = @(-22).stringValue;
+    detail = ((NSNumber *)rssi[indexPath.row]).stringValue;
   }
   
   else if (indexPath.section == SectionSettings)
@@ -144,8 +156,12 @@ typedef NS_ENUM(NSUInteger, Section) {
   }
 }
 
-
 #pragma mark - View controller overrides
+
+-(void)updateRSSI:(NSTimer*)timer
+{
+  [self.tableView reloadData];
+}
 
 - (void)viewDidLoad
 {
@@ -162,10 +178,26 @@ typedef NS_ENUM(NSUInteger, Section) {
   self.tableView.backgroundView.contentMode = UIViewContentModeScaleAspectFit;
 }
 
-- (void)didReceiveMemoryWarning {
+-(void)viewDidAppear:(BOOL)animated
+{
+  [super viewDidAppear:animated];
+  [self.tableView reloadData];
+  
+  _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateRSSI:) userInfo:nil repeats:true];
+}
+
+-(void)viewDidDisappear:(BOOL)animated
+{
+  [super viewDidDisappear:animated];
+  [_timer invalidate];
+}
+
+- (void)didReceiveMemoryWarning
+{
   [super didReceiveMemoryWarning];
   // Dispose of any resources that can be recreated.
 }
+
 
 
 

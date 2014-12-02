@@ -10,6 +10,7 @@
 
 static NSString *const kUserName = @"kUserName";
 static NSString *const kUserId = @"kUserId";
+static NSString *const kBottlesNumber = @"kBottlesNumber";
 static NSString *const kCanDeleteLastMessage = @"kCanDeleteLastMessage";
 
 @implementation NSUserDefaults (Settings)
@@ -32,6 +33,16 @@ static NSString *const kCanDeleteLastMessage = @"kCanDeleteLastMessage";
 +(void)saveUserId:(NSString*)userId
 {
   [[NSUserDefaults standardUserDefaults] setValue:userId forKey:kUserId];
+}
+
++(NSUInteger)bottlesNumber
+{
+  return [[NSUserDefaults standardUserDefaults] integerForKey:kBottlesNumber];
+}
+
++(void)saveBottlesNumber:(NSUInteger)bottlesNumber
+{
+  [[NSUserDefaults standardUserDefaults] setInteger:bottlesNumber forKey:kBottlesNumber];
 }
 
 +(BOOL)canDeleteLastMessage

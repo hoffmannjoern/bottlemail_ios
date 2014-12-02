@@ -16,6 +16,9 @@
 +(NSString*)userId;
 +(void)saveUserId:(NSString*)userId;
 
++(NSUInteger)bottlesNumber;
++(void)saveBottlesNumber:(NSUInteger)bottlesNumber;
+
 +(BOOL)canDeleteLastMessage;
 +(void)saveCanDeleteLastMessage:(BOOL)canDelete;
 
