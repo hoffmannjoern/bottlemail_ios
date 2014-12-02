@@ -70,7 +70,7 @@
         <scene sceneID="F2s-nH-mnH">
             <objects>
                 <tableViewController id="32O-20-uZ7" customClass="SettingsTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="uSg-AN-K0e">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="uSg-AN-K0e">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -163,8 +163,11 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3c2-Hm-ee8" id="C7x-TV-lje">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bottles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kS5-fy-Jcr">
-                                                    <rect key="frame" x="18" y="11" width="54" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bottle caches" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kS5-fy-Jcr">
+                                                    <rect key="frame" x="18" y="11" width="106" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="106" id="P2K-9Y-k7A"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -172,7 +175,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Uc-YD-gE3">
                                                     <rect key="frame" x="543" y="11" width="44" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="44" id="4W5-Nk-0uv"/>
+                                                        <constraint firstAttribute="width" constant="44" id="Pmt-mP-xHt"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -186,14 +189,14 @@
                                                 </stepper>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="kS5-fy-Jcr" firstAttribute="centerY" secondItem="C7x-TV-lje" secondAttribute="centerY" id="CEb-v5-o9j"/>
-                                                <constraint firstItem="kS5-fy-Jcr" firstAttribute="top" secondItem="C7x-TV-lje" secondAttribute="topMargin" constant="3" id="MqC-Nq-sqk"/>
-                                                <constraint firstItem="kS5-fy-Jcr" firstAttribute="leading" secondItem="C7x-TV-lje" secondAttribute="leadingMargin" constant="10" id="Nb9-QX-YcX"/>
-                                                <constraint firstItem="kS5-fy-Jcr" firstAttribute="baseline" secondItem="9Uc-YD-gE3" secondAttribute="baseline" id="dEq-fL-Xvo"/>
-                                                <constraint firstItem="kS5-fy-Jcr" firstAttribute="firstBaseline" secondItem="9Uc-YD-gE3" secondAttribute="firstBaseline" id="hd1-pL-Y4A"/>
-                                                <constraint firstItem="2jq-St-ai1" firstAttribute="top" secondItem="C7x-TV-lje" secondAttribute="topMargin" constant="-2" id="o9j-nY-wdn"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="9Uc-YD-gE3" secondAttribute="trailing" constant="5" id="u2C-Rl-fB9"/>
-                                                <constraint firstItem="9Uc-YD-gE3" firstAttribute="leading" secondItem="2jq-St-ai1" secondAttribute="trailing" constant="18" id="uFH-rU-VzB"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="9Uc-YD-gE3" secondAttribute="trailing" constant="5" id="BHc-Ex-quU"/>
+                                                <constraint firstItem="kS5-fy-Jcr" firstAttribute="centerY" secondItem="C7x-TV-lje" secondAttribute="centerY" id="Fky-2M-TaV"/>
+                                                <constraint firstItem="9Uc-YD-gE3" firstAttribute="leading" secondItem="2jq-St-ai1" secondAttribute="trailing" constant="18" id="MRV-re-akg"/>
+                                                <constraint firstItem="kS5-fy-Jcr" firstAttribute="firstBaseline" secondItem="9Uc-YD-gE3" secondAttribute="firstBaseline" id="STj-IY-5zp"/>
+                                                <constraint firstItem="9Uc-YD-gE3" firstAttribute="baseline" secondItem="kS5-fy-Jcr" secondAttribute="baseline" id="XDT-DS-pbS"/>
+                                                <constraint firstItem="2jq-St-ai1" firstAttribute="top" secondItem="C7x-TV-lje" secondAttribute="topMargin" constant="-2" id="Zur-gm-Cmm"/>
+                                                <constraint firstItem="kS5-fy-Jcr" firstAttribute="top" secondItem="C7x-TV-lje" secondAttribute="topMargin" constant="3" id="iql-ob-gSg"/>
+                                                <constraint firstItem="kS5-fy-Jcr" firstAttribute="leading" secondItem="C7x-TV-lje" secondAttribute="leadingMargin" constant="10" id="qmC-4p-ni4"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
