@@ -74,7 +74,7 @@ typedef NS_ENUM(NSUInteger, Section) {
   if (section == SectionBottles)
   {
     text = [NSString stringWithFormat:@"Bottle %lu", (unsigned long)indexPath.row];
-    detail = ((NSNumber *)rssi[indexPath.row]).stringValue;
+    detail =  [NSString stringWithFormat:@"RSSI %@", rssi[indexPath.row]];
   }
   
   else if (indexPath.section == SectionSettings)
